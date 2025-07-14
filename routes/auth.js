@@ -19,6 +19,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
     } catch (err) {
         return done(err);
     }
+
 }));
 
 passport.serializeUser((user, done) => {
