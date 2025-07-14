@@ -82,15 +82,3 @@ eLearningPlatform/
 ├── .env
 └── README.md
 ```
-
----
-
-## 📝 Contributing
-
-Pull requests and suggestions are welcome! Please open an issue for major changes.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT
