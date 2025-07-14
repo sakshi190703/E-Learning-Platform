@@ -1,0 +1,27 @@
+
+
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <h1 class="head mb-4 text-center" >All Courses</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% allListings.forEach(listing => { %>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= listing.title %></h5>
+                        
+                        <p class="card-text"><%= listing.description.substring(0, 100) %>...</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/student/listings/<%= listing._id %>" class="btn btn-add-course">View Details</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <% if (allListings.length === 0) { %>
+        <div class="text-center mt-4">
+            <p class="text-muted">No courses available. Be the first to add one!</p>
+        </div>
+    <% } %>
+</div>

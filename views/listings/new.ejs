@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4" style="color:#203a43;">Add New Course</h1>
+                    <% if (success && success.length) { %>
+                        <div class="alert alert-success"><%= success %></div>
+                    <% } %>
+                    <% if (error && error.length) { %>
+                        <div class="alert alert-danger"><%= error %></div>
+                    <% } %>
+
+                    <form action="/instructor/courses/new" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" id="title" name="listing[title]" required class="form-control" placeholder="Enter course title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="instructor" class="form-label">Instructor</label>
+                            <input type="text" id="instructor" name="listing[instructor]" required class="form-control" placeholder="Enter instructor name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="listing[description]" required class="form-control" rows="4" placeholder="Enter course description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price (₹)</label>
+                            <input type="number" id="price" name="listing[price]" required class="form-control" placeholder="Enter course price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Course Image</label>
+                            <input type="file" id="image" name="listing[image]" class="form-control">
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn-add-course btn"  >Add Course</button>
+                            <a href="/instructor/dashboard" class="btn-cancel btn ">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

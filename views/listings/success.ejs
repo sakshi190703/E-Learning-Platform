@@ -1,0 +1,15 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Success!</h1>
+                    <p class="card-text">The course "<strong><%= course.title %></strong>" has been created successfully.</p>
+                    <a href="/instructor/dashboard" class="btn btn-add-course mt-3">Go to Dashboard</a>
+                    <a href="/instructor/courses/new" class="btn btn-add-course mt-3">Create Another Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

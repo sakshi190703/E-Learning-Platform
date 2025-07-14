@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Create New Test for <%= course.title %></h1>
+                    <form action="/instructor/courses/<%= course._id %>/tests" method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Test Title</label>
+                            <input type="text" id="title" name="test[title]" required class="form-control" placeholder="Enter test title">
+                        </div>
+                        <div id="questions">
+                            <div class="question mb-4">
+                                <label class="form-label">Question 1</label>
+                                <input type="text" name="test[questions][0][question]" required class="form-control mb-2" placeholder="Enter question">
+                                <label class="form-label">Options 1</label>
+                                <input type="text" name="test[questions][0][options]" required class="form-control mb-2" placeholder="Enter options">
+                                <label class="form-label">Options 2</label>
+                                <input type="text" name="test[questions][0][options]" required class="form-control mb-2" placeholder="Enter options">
+                                <label class="form-label">Options 3</label>
+                                <input type="text" name="test[questions][0][options]" required class="form-control mb-2" placeholder="Enter options">
+                                <label class="form-label">Options 4</label>
+                                <input type="text" name="test[questions][0][options]" required class="form-control mb-2" placeholder="Enter options">
+                                <label class="form-label">Correct Answer</label>
+                                <input type="text" name="test[questions][0][correctAnswer]" required class="form-control" placeholder="Enter correct answer">
+                            </div>
+                        </div>
+                        <button type="button" onclick="addQuestion()" class="btn btn-add-course mb-3">Add Question</button>
+                        <button type="submit" class="btn btn-add-course w-100">Create Test</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let questionCount = 1;
+    function addQuestion() {
+        const questionsDiv = document.getElementById('questions');
+        const newQuestion = document.createElement('div');
+        newQuestion.className = 'question mb-4';
+        newQuestion.innerHTML = `
+            <label class="form-label">Question ${questionCount + 1}</label>
+            <input type="text" name="test[questions][${questionCount}][question]" required class="form-control mb-2" placeholder="Enter question">
+            <label class="form-label">Options 1</label>
+            <input type="text" name="test[questions][${questionCount}][options]" required class="form-control mb-2" placeholder="Enter options">
+            <label class="form-label">Options 2</label>
+            <input type="text" name="test[questions][${questionCount}][options]" required class="form-control mb-2" placeholder="Enter options">
+            <label class="form-label">Options 3</label>
+            <input type="text" name="test[questions][${questionCount}][options]" required class="form-control mb-2" placeholder="Enter options">
+            <label class="form-label">Options 4</label>
+            <input type="text" name="test[questions][${questionCount}][options]" required class="form-control mb-2" placeholder="Enter options">
+            <label class="form-label">Correct Answer</label>
+            <input type="text" name="test[questions][${questionCount}][correctAnswer]" required class="form-control" placeholder="Enter correct answer">
+        `;
+        questionsDiv.appendChild(newQuestion);
+        questionCount++;
+    }
+</script>

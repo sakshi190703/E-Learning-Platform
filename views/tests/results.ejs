@@ -1,0 +1,31 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Test Results: <%= test.title %></h1>
+                    <p><strong>Course:</strong> <%= test.course.title %></p>
+                    <p><strong>Submitted At:</strong> <%= testAttempt.submittedAt.toLocaleString() %></p>
+                    <% if (testAttempt.score !== undefined && testAttempt.gradedAt) { %>
+                        <p><strong>Score:</strong> <%= testAttempt.score %>%</p>
+                        <p><strong>Graded At:</strong> <%= testAttempt.gradedAt.toLocaleString() %></p>
+                    <% } else { %>
+                        <p><strong>Status:</strong> Awaiting grading</p>
+                    <% } %>
+                    <h3>Your Answers:</h3>
+                    <% testAttempt.answers.forEach((answer, i) => { %>
+                        <div class="mb-4">
+                            <p class="fw-semibold">Question: <%= answer.question %></p>
+                            <p><strong>Your Answer:</strong> <%= answer.selectedAnswer || 'Not answered' %></p>
+                            <% if (testAttempt.score !== undefined && testAttempt.gradedAt) { %>
+                                <p><strong>Correct Answer:</strong> <%= test.questions[i].correctAnswer %></p>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                    <a href="/student/dashboard" class="btn btn-add-course">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

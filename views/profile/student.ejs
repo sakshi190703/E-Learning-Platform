@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h1 class="card-title mb-4">Student Dashboard</h1>
+            <p><strong>Username:</strong> <%= user.username %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Bio:</strong> <%= user.bio || 'No bio provided' %></p>
+            <a href="/student/listings" class="btn btn-add-course mt-3">Browse Courses</a>
+            <h2 class="mt-5">Enrolled Courses</h2>
+            <ul class="list-group mt-3">
+                <% user.enrolledCourses.forEach(ec => { %>
+                    <li class="list-group-item">
+                        <a href="/student/listings/<%= ec.course._id %>" class="sub-text"><%= ec.course.title %></a>
+                    </li>
+                <% }) %>
+            </ul>
+            <h2 class="mt-5">Your Submitted Assignments</h2>
+            <% if (user.submittedAssignments.length === 0) { %>
+                <p>No assignments submitted yet.</p>
+            <% } else { %>
+                <ul class="list-group mt-3">
+                    <% user.submittedAssignments.forEach(sub => { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div >
+                                <a href="/student/assignments/<%= sub.assignment._id %>/results" class="sub-text">
+                                    <%= sub.assignment.title %> (Course: <%= sub.assignment.course.title %>)
+                                </a>
+                                <p>
+                                    <strong>Submitted At:</strong> <%= sub.submittedAt.toLocaleString() %><br>
+                                    <% if (sub.score !== undefined && sub.gradedAt) { %>
+                                        <strong>Score:</strong> <%= sub.score %>% (Graded on <%= sub.gradedAt.toDateString() %>)
+                                    <% } else { %>
+                                        <strong>Status:</strong> Awaiting grading
+                                    <% } %>
+                                </p>
+                            </div>
+                            <a href="/student/assignments/<%= sub.assignment._id %>/results" class="btn btn-add-course btn-sm">View Submission</a>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+            <h2 class="mt-5">Your Submitted Tests</h2>
+            <% if (user.testScores.length === 0) { %>
+                <p>No tests submitted yet.</p>
+            <% } else { %>
+                <ul class="list-group mt-3">
+                    <% user.testScores.forEach(score => { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="/student/tests/<%= score.test._id %>/results" class="sub-text">
+                                    <%= score.test.title %> (Course: <%= score.test.course.title %>)
+                                </a>
+                                <p>
+                                    <strong>Submitted At:</strong> <%= score.submittedAt.toLocaleString() %><br>
+                                    <% if (score.score !== undefined && score.gradedAt) { %>
+                                        <strong>Score:</strong> <%= score.score %>% (Graded on <%= score.gradedAt.toDateString() %>)
+                                    <% } else { %>
+                                        <strong>Status:</strong> Awaiting grading
+                                    <% } %>
+                                </p>
+                            </div>
+                            <a href="/student/tests/<%= score.test._id %>/results" class="btn btn-add-course btn-sm">View Results</a>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+            <form action="/student/account?_method=DELETE" method="POST" class="mt-4" onsubmit="return confirm('Are you sure you want to delete your account?');">
+                <button type="submit" class="btn-delete btn ">Delete Account</button>
+            </form>
+        </div>
+    </div>
+</div>

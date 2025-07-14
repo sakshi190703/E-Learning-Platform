@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h1 class="card-title mb-4">Grade Assignment: <%= assignment.title %></h1>
+            <p><strong>Course:</strong> <%= assignment.course.title %></p>
+            <p><strong>Description:</strong> <%= assignment.description %></p>
+            <% if (success && success.length) { %>
+                <div class="alert alert-success"><%= success %></div>
+            <% } %>
+            <% if (error && error.length) { %>
+                <div class="alert alert-danger"><%= error %></div>
+            <% } %>
+            <h2 class="mt-5">Student Submissions</h2>
+            <% if (students.length === 0) { %>
+                <p>No submissions yet.</p>
+            <% } else { %>
+                <ul class="list-group mt-3">
+                    <% students.forEach(student => { %>
+                        <li class="list-group-item">
+                            <h5><%= student.username %></h5>
+                            <% const submission = student.submittedAssignments.find(sa => sa.assignment._id.toString() === assignment._id.toString()) %>
+                            <% if (submission.gradedAt) { %>
+                                <p>Score: <%= submission.score %>% (Graded on <%= submission.gradedAt.toDateString() %>)</p>
+                            <% } else { %>
+                                <div class="mb-3">
+                                    <h6>Submitted Content:</h6>
+                                    <% if (submission.submission.startsWith('uploads/')) { %>
+                                        <p><strong>File:</strong> <a href="/<%= submission.submission %>" target="_blank">Download Submission</a></p>
+                                    <% } else { %>
+                                        <p><strong>Text Submission:</strong> <%= submission.submission %></p>
+                                    <% } %>
+                                    <p><strong>Submitted At:</strong> <%= submission.submittedAt.toLocaleString() %></p>
+                                </div>
+                                <form action="/instructor/assignments/<%= assignment._id %>/grade/<%= student._id %>" method="POST" class="d-inline">
+                                    <label for="score-<%= student._id %>" class="form-label">Score (0-100):</label>
+                                    <input type="number" id="score-<%= student._id %>" name="score" min="0" max="100" required class="form-control d-inline w-auto">
+                                    <button type="submit" class="btn btn-add-course btn-sm">Grade</button>
+                                </form>
+                            <% } %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+            <a href="/instructor/courses/<%= assignment.course._id %>/assignments" class="btn btn-add-course mt-3">Back to Assignments</a>
+        </div>
+    </div>
+</div>

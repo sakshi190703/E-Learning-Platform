@@ -1,0 +1,218 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(116, 188, 190) ;
+    display : flex !important;
+    flex-direction  :column !important;
+    min-height : 100vh !important;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+    flex:1 !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #203a43!important; /* Dark navbar background */
+    height: 5rem;
+}
+
+.nav-link {
+    color: white !important;
+} 
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.f-info {
+    text-align: center;
+    height: 8rem;
+    background-color: #203a43;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: white;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-socials i {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Cards */
+.card {
+    border: none !important;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 1rem !important;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.card-text {
+    font-weight: 400 !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 0.5rem;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.bg-custom-footer, .getStarted{
+    background-color: #203a43!important;
+    color : white !important;
+}
+
+.auth{
+    background-color: #203a43;
+    color : white;
+}
+
+.auth-btn{
+    background-color:#203b44 !important;
+    color:white !important;
+}
+
+.log-in{
+    color:#203b44 ;
+    
+}
+
+/* dashboard*/
+.dashboardHeader .navbar{
+    background-color: #203a43!important;
+    color : white;
+}
+
+.inst-dash{
+    background-color: #203a43!important;
+}
+
+.navbar-brand{
+    color : white;
+}
+
+.p .strong{
+    color : white;
+}
+
+.create-new{
+    background-color: #99dbf1!important;
+    color:black;
+}
+
+.btn-add-course, .btn-cancel{
+    background-color: #203a43 !important;
+    color:white !important;
+}
+
+.btn-outline-primary{
+    border-color: #203a43 !important;
+    color : #203a43 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #203a43 !important;
+    color: white !important;
+  }
+  
+
+.sub-text{
+    font-size:larger;
+    font-weight: bold;
+    color : #203a43;
+    text-decoration: none;
+}
+
+.sub-text:hover{
+    color : #00a6de;
+}
+
+.btn-delete, .unenroll{
+    background-color: #933153 !important;
+    color:white !important;
+}
+
+.head{
+    color:#203a43;
+    font-weight: bolder;
+}

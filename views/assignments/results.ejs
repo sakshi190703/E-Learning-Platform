@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Assignment Submission: <%= assignment.title %></h1>
+                    <p><strong>Course:</strong> <%= assignment.course.title %></p>
+                    <p><strong>Submitted At:</strong> <%= assignmentSubmission.submittedAt.toLocaleString() %></p>
+                    <% if (assignmentSubmission.score !== undefined && assignmentSubmission.gradedAt) { %>
+                        <p><strong>Score:</strong> <%= assignmentSubmission.score %>%</p>
+                        <p><strong>Graded At:</strong> <%= assignmentSubmission.gradedAt.toLocaleString() %></p>
+                    <% } else { %>
+                        <p><strong>Status:</strong> Awaiting grading</p>
+                    <% } %>
+                    <h3>Your Submission:</h3>
+                    <% if (assignmentSubmission.submission.startsWith('uploads/')) { %>
+                        <p><strong>File:</strong> <a href="/<%= assignmentSubmission.submission %>" target="_blank">Download Submission</a></p>
+                    <% } else { %>
+                        <p><strong>Text Submission:</strong> <%= assignmentSubmission.submission %></p>
+                    <% } %>
+                    <a href="/student/dashboard" class="btn btn-add-course">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

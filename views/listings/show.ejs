@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h1 class="card-title mb-4"><%= listing.title %></h1>
+            <p class="card-text mb-4"><%= listing.description %></p>
+            <p class="text-muted">Created by: <%= listing.createdBy.username %></p>
+            <% if (currentUser && !currentUser.enrolledCourses.some(ec => ec.course.toString() === listing._id.toString())) { %>
+                <form action="/student/courses/<%= listing._id %>/enroll" method="POST" class="mt-4">
+                    <button type="submit" class="btn btn-add-course">Enroll</button>
+                </form>
+            <% } else if (currentUser && currentUser.enrolledCourses.some(ec => ec.course.toString() === listing._id.toString())) { %>
+                <form action="/student/courses/<%= listing._id %>/unenroll" method="POST" class="mt-4">
+                    <button type="submit" class="btn unenroll">Unenroll</button>
+                </form>
+            <% } %>
+            <h2 class="mt-5">Assignments</h2>
+            <ul class="list-group">
+                <% assignments.forEach(assignment => { %>
+                    <li class="list-group-item">
+                        <a href="/student/assignments/<%= assignment._id %>/submit" class="sub-text"><%= assignment.title %></a>
+                    </li>
+                <% }) %>
+            </ul>
+            <h2 class="mt-5">Tests</h2>
+            <ul class="list-group">
+                <% tests.forEach(test => { %>
+                    <li class="list-group-item">
+                        <a href="/student/tests/<%= test._id %>/take" class="sub-text"><%= test.title %></a>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+        <div class="card-footer text-center">
+            <a href="/student/listings" class="btn btn-add-course">Back to Listings</a>
+        </div>
+    </div>
+</div>

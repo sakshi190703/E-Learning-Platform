@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Create New Assignment for <%= course.title %></h1>
+                    <form action="/instructor/courses/<%= course._id %>/assignments" method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" id="title" name="assignment[title]" required class="form-control" placeholder="Enter assignment title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="assignment[description]" required class="form-control" rows="4" placeholder="Enter assignment description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-add-course w-100">Create Assignment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

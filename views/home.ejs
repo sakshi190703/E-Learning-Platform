@@ -1,0 +1,10 @@
+<% layout('layouts/boilerplate') %>
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold mb-4">Welcome to eLearning Platform</h1>
+    <p class="lead mb-4">Learn and teach with our comprehensive online courses.</p>
+    <% if (!currentUser) { %>
+        <a href="/signup" class="getStarted btn btn-lg">Get Started</a>
+    <% } else { %>
+        <a href="<%= currentUser.role === 'instructor' ? '/instructor/dashboard' : '/student/dashboard' %>" class="getStarted btn btn-lg">Go to Dashboard</a>
+    <% } %>
+</div>

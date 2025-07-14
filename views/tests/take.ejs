@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">Take Test: <%= test.title %></h1>
+                    <p><strong>Course:</strong> <%= test.course.title %></p>
+                    <% if (success && success.length) { %>
+                        <div class="alert alert-success"><%= success %></div>
+                    <% } %>
+                    <% if (error && error.length) { %>
+                        <div class="alert alert-danger"><%= error %></div>
+                    <% } %>
+                    <form action="/student/tests/<%= test._id %>/submit" method="POST">
+                        <% test.questions.forEach((q, i) => { %>
+                            <div class="mb-4">
+                                <p class="fw-semibold"><%= q.question %></p>
+                                <% q.options.forEach((option, j) => { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="answers[<%= i %>]" value="<%= option %>" required>
+                                        <input class="form-check-input" type="radio" name="answers[<%= i %>]" value="<%= option %>" required>
+                                        <input class="form-check-input" type="radio" name="answers[<%= i %>]" value="<%= option %>" required>
+                                        <input class="form-check-input" type="radio" name="answers[<%= i %>]" value="<%= option %>" required>
+                                        <label class="form-check-label">
+                                            <%= option %>
+                                        </label>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% }) %>
+                        <button type="submit" class="btn btn-primary w-100">Submit Test</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

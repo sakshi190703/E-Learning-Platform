@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Edit Course</h1>
+                    <form action="/instructor/courses/<%= listing._id %>?_method=PUT" method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" id="title" name="listing[title]" value="<%= listing.title %>" required class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="listing[description]" required class="form-control" rows="4"><%= listing.description %></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update Course</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
