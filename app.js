@@ -33,6 +33,10 @@ async function main() {
 }
 main();
 
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => console.error("❌ MongoDB Connection Error:", err));
+
 // Express Configuration
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
