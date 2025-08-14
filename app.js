@@ -129,8 +129,22 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong! Check the console for details.');
 });
 
-// Start Server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+// // Start Server
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//     console.log(`Server running on port ${port}`);
+// });
+
+// module.exports = app;
+
+
+if (process.env.VERCEL) {
+    // On Vercel, just export the app — don't start a server
+    module.exports = app;
+} else {
+    // Local development
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+}

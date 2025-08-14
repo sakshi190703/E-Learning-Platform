@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/index.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "api/index.js" }
+  ],
+  "env": {
+    "MONGO_URL":"mongodb+srv://sakshisolanki1030:mWAORRvshZVzXGJq@elearning.i0vd7ys.mongodb.net/eLearningPlatform?retryWrites=true&w=majority&appName=elearning"
+  }
+}
