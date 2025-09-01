@@ -16,22 +16,47 @@ const User = require('./models/user');
 const app = express();
 const fs = require('fs');
 
-// MongoDB Connection
+// MongoDB Connection with connection pooling for serverless
 const mongoUrl = process.env.MONGO_URL;
-async function main() {
+let isConnected = false;
+
+async function connectToDatabase() {
+    if (isConnected && mongoose.connection.readyState === 1) {
+        return;
+    }
+    
     if (!mongoUrl) {
         console.error('MongoDB URL not found in environment variables. Please set MONGO_URL in .env');
-        process.exit(1);
+        throw new Error('MongoDB URL not configured');
     }
+    
     try {
-        await mongoose.connect(mongoUrl); // Remove useNewUrlParser and useUnifiedTopology
+        await mongoose.connect(mongoUrl, {
+            serverSelectionTimeoutMS: 3000, // 3 second timeout for serverless
+            socketTimeoutMS: 3000,
+            maxPoolSize: 1, // Limit connection pool for serverless
+            bufferCommands: false // Disable mongoose buffering for serverless
+        });
+        isConnected = true;
         console.log('Connected to MongoDB');
     } catch (err) {
         console.error('MongoDB connection error:', err);
-        process.exit(1);
+        isConnected = false;
+        throw err;
     }
 }
-main();
+
+// Initialize connection
+if (!process.env.VERCEL) {
+    // Only auto-connect in local development
+    connectToDatabase().catch(err => {
+        console.error('Failed to initialize database connection:', err);
+    });
+} else {
+    // Configure mongoose for serverless
+    mongoose.set('bufferCommands', false);
+}
+
 // Express Configuration
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -40,17 +65,29 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const uploadDir = path.join(__dirname, 'uploads');
+// Handle uploads directory - serverless functions can't write to disk
+const uploadDir = process.env.VERCEL ? '/tmp/uploads' : path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  try {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  } catch (err) {
+    console.warn('Could not create uploads directory:', err.message);
+  }
 }
 
 // Session Configuration
+const sessionStore = process.env.VERCEL 
+    ? undefined // Use memory store for serverless
+    : MongoStore.create({ 
+        mongoUrl: process.env.MONGO_URL,
+        touchAfter: 24 * 3600 // lazy session update
+    });
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'Sakshi@123',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+    store: sessionStore,
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -113,9 +150,32 @@ app.use((req, res, next) => {
     next();
 });
 
+// Database connection middleware for serverless
+app.use(async (req, res, next) => {
+    if (process.env.VERCEL) {
+        try {
+            await connectToDatabase();
+        } catch (err) {
+            console.error('Database connection failed:', err);
+            return res.status(500).send('Database connection failed');
+        }
+    }
+    next();
+});
+
 // Routes
-app.get('/', (req, res) => {
-    res.render('home');
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/', async (req, res) => {
+    try {
+        res.render('home');
+    } catch (err) {
+        console.error('Error rendering home page:', err);
+        res.status(500).send('Error loading page');
+    }
 });
 
 app.use('/', authRoutes);
